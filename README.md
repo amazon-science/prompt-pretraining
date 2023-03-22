@@ -10,7 +10,7 @@
 
 
 # :rocket: News
-* **(Feb 8, 2023)** 
+* **(Mar 22, 2023)** 
   * Codes for prompt pretraining (POMP) on ImageNet-21K, cross-dataset and cross-task evaluation.
   * Checkpoints of pre-trained POMP prompts, segmentation backbones, and detection backbones.
 <hr />
