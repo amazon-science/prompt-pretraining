@@ -1,0 +1,21 @@
+_BASE_: zero_shot_maskformer_R50_bs32_60k.yaml
+MODEL:
+  BACKBONE:
+    NAME: "build_resnet_deeplab_backbone"
+  WEIGHTS: "detectron2://DeepLab/R-103.pkl"
+  RESNETS:
+    DEPTH: 101
+    STEM_TYPE: "deeplab"
+    STEM_OUT_CHANNELS: 128
+    STRIDE_IN_1X1: False
+    OUT_FEATURES: ["res2", "res3", "res4", "res5"]
+    # NORM: "SyncBN"
+    RES5_MULTI_GRID: [1, 2, 4]
+  CLIP_ADAPTER:
+    PROMPT_LEARNER: "pomp_tuned"
+    # for learnable prompt
+    PROMPT_DIM: 512
+    PROMPT_SHAPE: (16, 0)
+    CLIP_MODEL_NAME: "ViT-B/16"
+    PROMPT_CHECKPOINT: output/coco-stuff-164k-156/zero_shot_proposal_classification_learn_prompt_pomp_bs32_10k/model_final.pth
+OUTPUT_DIR: output/coco-stuff-164k-171/zero_shot_maskformer_R101c_pomp_prompt_bs32_60k

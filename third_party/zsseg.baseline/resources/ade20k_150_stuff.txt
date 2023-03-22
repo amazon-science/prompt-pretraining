@@ -1,0 +1,88 @@
+wall
+building
+sky
+floor
+tree
+ceiling
+road, route
+window
+grass
+cabinet
+sidewalk, pavement
+earth, ground
+table
+mountain, mount
+plant
+curtain
+water
+painting, picture
+shelf
+house
+sea
+mirror
+rug
+field
+fence
+rock, stone
+wardrobe, closet, press
+lamp
+tub
+rail
+cushion
+base, pedestal, stand
+column, pillar
+counter
+sand
+sink
+skyscraper
+fireplace
+refrigerator, icebox
+grandstand, covered stand
+path
+stairs
+runway
+case, display case, showcase, vitrine
+screen door, screen
+stairway, staircase
+river
+bridge, span
+bookcase
+flower
+hill
+bench
+countertop
+stove
+palm, palm tree
+kitchen island
+bar
+hovel, hut, hutch, shack, shanty
+light
+tower
+chandelier
+awning, sunshade, sunblind
+booth
+dirt track
+clothes
+pole
+land, ground, soil
+bannister, banister, balustrade, balusters, handrail
+escalator, moving staircase, moving stairway
+buffet, counter, sideboard
+stage
+fountain
+canopy
+pool
+falls
+tent
+cradle
+step, stair
+tank, storage tank
+trade name
+lake
+screen
+blanket, cover
+sculpture
+tray
+pier
+bulletin board
+shower

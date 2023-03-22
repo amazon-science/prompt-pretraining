@@ -1,0 +1,25 @@
+_BASE_: zero_shot_maskformer_R50_bs32_60k.yaml
+MODEL:
+  BACKBONE:
+    NAME: "build_resnet_deeplab_backbone"
+  WEIGHTS: "detectron2://DeepLab/R-103.pkl"
+  CLIP_ADAPTER:
+    PROMPT_LEARNER: "predefined"
+    PREDEFINED_PROMPT_TEMPLATES: [ "a sculpture of a {}." ]
+    CLIP_MODEL_NAME: "ViT-B/16"
+    MASK_FILL: "mean"
+    MASK_EXPAND_RATIO: 1.0
+    MASK_THR: 0.5
+    MASK_MATTING: False
+    REGION_RESIZED: True
+    CLIP_ENSEMBLE: True
+    CLIP_ENSEMBLE_WEIGHT: 0.8
+  RESNETS:
+    DEPTH: 101
+    STEM_TYPE: "deeplab"
+    STEM_OUT_CHANNELS: 128
+    STRIDE_IN_1X1: False
+    OUT_FEATURES: ["res2", "res3", "res4", "res5"]
+    # NORM: "SyncBN"
+    RES5_MULTI_GRID: [1, 2, 4]
+OUTPUT_DIR: output/coco-stuff-164k-171/zero_shot_maskformer_R101c_single_prompt_bs32_60k/

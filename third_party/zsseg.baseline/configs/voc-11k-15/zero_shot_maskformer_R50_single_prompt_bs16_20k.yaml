@@ -1,0 +1,21 @@
+_BASE_: ../voc-11k-20/maskformer_R50_bs16_20k.yaml
+MODEL:
+  META_ARCHITECTURE: "ZeroShotMaskFormer"
+  SEM_SEG_HEAD:
+    NAME: "ZeroShotMaskFormerHead"
+    NUM_CLASSES: 15 #only used in set criterion
+    EMBEDDING_DIM: 512
+    EMBED_LAYERS: 2
+  CLIP_ADAPTER:
+    PROMPT_LEARNER: "predefined"
+    PREDEFINED_PROMPT_TEMPLATES: ["a sculpture of a {}."]
+    CLIP_MODEL_NAME: "ViT-B/16"
+    MASK_FILL: "mean"
+    MASK_EXPAND_RATIO: 1.0
+    MASK_THR: 0.5
+    MASK_MATTING: False
+    REGION_RESIZED: True
+    CLIP_ENSEMBLE: True
+    CLIP_ENSEMBLE_WEIGHT: 0.7
+DATASETS:
+  TRAIN: ("voc_base_sem_seg_train",)

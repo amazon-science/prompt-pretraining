@@ -1,0 +1,5 @@
+_BASE_: "Base_OVCOCO_C4_1x.yaml"
+MODEL:
+  ROI_BOX_HEAD:
+    USE_ZEROSHOT_CLS: True
+    ZEROSHOT_WEIGHT_PATH: 'datasets/metadata/coco_clip_pomp+cname.npy'

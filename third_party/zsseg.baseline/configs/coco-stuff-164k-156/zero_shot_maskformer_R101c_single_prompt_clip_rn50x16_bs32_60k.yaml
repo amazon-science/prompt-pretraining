@@ -1,0 +1,18 @@
+_BASE_: zero_shot_maskformer_R50_single_prompt_bs32_60k.yaml
+MODEL:
+  BACKBONE:
+    NAME: "build_resnet_deeplab_backbone"
+  WEIGHTS: "detectron2://DeepLab/R-103.pkl"
+  RESNETS:
+    DEPTH: 101
+    STEM_TYPE: "deeplab"
+    STEM_OUT_CHANNELS: 128
+    STRIDE_IN_1X1: False
+    OUT_FEATURES: ["res2", "res3", "res4", "res5"]
+    # NORM: "SyncBN"
+    RES5_MULTI_GRID: [1, 2, 4]
+  CLIP_ADAPTER:
+    CLIP_MODEL_NAME: "RN50x16"
+    PROMPT_DIM: 768
+  SEM_SEG_HEAD:
+    EMBEDDING_DIM: 768

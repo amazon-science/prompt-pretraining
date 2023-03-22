@@ -1,0 +1,36 @@
+_BASE_: ../coco-stuff-164k-171/maskformer_R50_bs32_60k.yaml
+ORACLE: True
+MODEL:
+  META_ARCHITECTURE: "ProposalClipClassifier"
+  MASK_ON: True
+  CLIP_ADAPTER:
+    PROMPT_LEARNER: "predefined"
+    PREDEFINED_PROMPT_TEMPLATES: ["a sculpture of a {}."]
+    # for learnable prompt
+    PROMPT_DIM: 512
+    PROMPT_SHAPE: (16, 0)
+    CLIP_MODEL_NAME: "ViT-B/16"
+DATASETS:
+  TRAIN: ("coco_2017_train_stuff_base_sem_seg_classification",)
+  TEST: ("coco_2017_test_stuff_sem_seg_classification",)
+INPUT:
+  MIN_SIZE_TRAIN: (224,244)
+  MIN_SIZE_TEST: 224
+  MAX_SIZE_TEST: 2560
+  SIZE_DIVISIBILITY: -1
+  FORMAT: "RGB"
+  DATASET_MAPPER_NAME: "mask_former_binary_semantic"
+SOLVER:
+  OPTIMIZER: "SGD"
+  BASE_LR: 0.002
+  WEIGHT_DECAY: 0.0005
+  LR_SCHEDULER_NAME: "WarmupCosineLR"
+  WARMUP_METHOD: "constant"  
+  WARMUP_FACTOR: 0.005
+  WARMUP_ITERS: 100
+  IMS_PER_BATCH: 32
+  TEST_IMS_PER_BATCH: 4
+  MAX_ITER: 10000
+  CHECKPOINT_PERIOD: 5000
+TEST:
+  EVAL_PERIOD: 5000

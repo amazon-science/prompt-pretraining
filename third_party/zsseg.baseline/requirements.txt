@@ -1,0 +1,8 @@
+cython
+scipy
+shapely
+timm
+h5py
+wandb
+fire
+mmcv
