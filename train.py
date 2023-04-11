@@ -29,6 +29,11 @@ import datasets.imagenet_r
 
 import trainers.pomp
 import trainers.clip_mlp
+import trainers.coop
+import trainers.cocoop
+import trainers.zsclip
+import trainers.maple
+import trainers.vpt
 
 
 def reset_cfg(cfg, args):
@@ -81,6 +86,7 @@ def extend_cfg(cfg):
 
     cfg.DATASET.SUBSAMPLE_CLASSES = "all"  # all, base or new
 
+    # Config for POMP
     cfg.TRAINER.POMP = CN()
     cfg.TRAINER.POMP.N_CTX = 4  # number of context vectors
     cfg.TRAINER.POMP.CSC = False  # class-specific context
@@ -92,6 +98,36 @@ def extend_cfg(cfg):
     cfg.TRAINER.POMP.LOCAL_CORRECTION = True
     cfg.TRAINER.POMP.NEG_SAMPLING_MODE = 'random'
 
+    # Config for COOP
+    cfg.TRAINER.COOP = CN()
+    cfg.TRAINER.COOP.N_CTX = 16  # number of context vectors
+    cfg.TRAINER.COOP.CSC = False  # class-specific context
+    cfg.TRAINER.COOP.CTX_INIT = ""  # initialization words
+    cfg.TRAINER.COOP.PREC = "fp16"  # fp16, fp32, amp
+    cfg.TRAINER.COOP.CLASS_TOKEN_POSITION = "end"  # 'middle' or 'end' or 'front'
+    cfg.TRAINER.COOP.PRETRAINED_WEOGHT = ''
+
+    # Config for COCOOP
+    cfg.TRAINER.COCOOP = CN()
+    cfg.TRAINER.COCOOP.N_CTX = 16  # number of context vectors
+    cfg.TRAINER.COCOOP.CTX_INIT = ""  # initialization words
+    cfg.TRAINER.COCOOP.PREC = "fp16"  # fp16, fp32, amp
+
+    # Config for MaPLe
+    cfg.TRAINER.MAPLE = CN()
+    cfg.TRAINER.MAPLE.N_CTX = 2  # number of context vectors
+    cfg.TRAINER.MAPLE.CTX_INIT = "a photo of a"  # initialization words
+    cfg.TRAINER.MAPLE.PREC = "fp16"  # fp16, fp32, amp
+    cfg.TRAINER.MAPLE.PROMPT_DEPTH = 9 # Max 12, minimum 0, for 1 it will act as shallow MaPLe (J=1)
+
+    # Config for only vision side prompting
+    cfg.TRAINER.VPT = CN()
+    cfg.TRAINER.VPT.N_CTX_VISION = 2  # number of context vectors at the vision branch
+    cfg.TRAINER.VPT.CTX_INIT = "a photo of a"  # initialization words
+    cfg.TRAINER.VPT.PREC = "fp16"  # fp16, fp32, amp
+    cfg.TRAINER.VPT.PROMPT_DEPTH_VISION = 1  # if set to 1, will represent shallow vision prompting only
+
+    # Config for MLP & Linear
     cfg.TRAINER.MLP = CN()
     cfg.TRAINER.MLP.PREC = "fp16"  # fp16, fp32, amp
 

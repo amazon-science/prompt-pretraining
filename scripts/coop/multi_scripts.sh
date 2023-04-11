@@ -1,0 +1,11 @@
+CUDA_VISIBLE_DEVICES=0 sh scripts/coop/main.sh imagenet rn50_ep50 end 16 16 False
+CUDA_VISIBLE_DEVICES=3 sh scripts/coop/main.sh food101 rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=4 sh scripts/coop/main.sh stanford_cars rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=5 sh scripts/coop/main.sh fgvc_aircraft rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=6 sh scripts/coop/main.sh oxford_pets rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=7 sh scripts/coop/main.sh caltech101 rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=0 sh scripts/coop/main.sh oxford_flowers rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=1 sh scripts/coop/main.sh eurosat rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=2 sh scripts/coop/main.sh dtd rn50_ep100 end 16 16 False
+CUDA_VISIBLE_DEVICES=3 sh scripts/coop/main.sh sun397 rn50_ep100 end 16 16 False 
+CUDA_VISIBLE_DEVICES=4 sh scripts/coop/main.sh ucf101 rn50_ep100 end 16 16 False 
