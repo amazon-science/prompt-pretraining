@@ -1,6 +1,6 @@
 # Prompt Pre-Training with Over Twenty-Thousand Classes for Open-Vocabulary Visual Recognition
 
-
+<h5 align="center"><i>"Scaling up prompt learning on ImageNet-21K achieves SOTA on 21 downstream datasets."</i></h5>
 
 > [**Prompt Pre-Training with Over Twenty-Thousand Classes for Open-Vocabulary Visual Recognition**](https://arxiv.org/abs/2304.04704)<br>
 > [Shuhuai Ren](https://renshuhuai-andy.github.io/), [Aston Zhang](https://www.astonzhang.com/), [Yi Zhu](https://bryanyzhu.github.io/), [Shuai Zhang](https://shuaizhang.tech/), [Shuai Zheng](https://szhengac.github.io/), [Mu Li](http://www.cs.cmu.edu/~muli/), [Alex Smola](https://alex.smola.org/), [Xu Sun](https://xusun.org/index.htm)
