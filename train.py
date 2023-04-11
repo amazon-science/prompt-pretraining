@@ -8,6 +8,7 @@ from dassl.utils import setup_logger, set_random_seed, collect_env_info
 from dassl.config import get_cfg_default
 from dassl.engine import build_trainer
 import os
+from utils import print_args, is_main_process
 # custom
 import datasets.oxford_pets
 import datasets.oxford_flowers
@@ -28,20 +29,6 @@ import datasets.imagenet_r
 
 import trainers.pomp
 import trainers.clip_mlp
-
-
-def print_args(args, cfg):
-    print("***************")
-    print("** Arguments **")
-    print("***************")
-    optkeys = list(args.__dict__.keys())
-    optkeys.sort()
-    for key in optkeys:
-        print("{}: {}".format(key, args.__dict__[key]))
-    print("************")
-    print("** Config **")
-    print("************")
-    print(cfg)
 
 
 def reset_cfg(cfg, args):
@@ -91,6 +78,8 @@ def extend_cfg(cfg):
         cfg.TRAINER.MY_MODEL.PARAM_C = False
     """
     from yacs.config import CfgNode as CN
+
+    cfg.DATASET.SUBSAMPLE_CLASSES = "all"  # all, base or new
 
     cfg.TRAINER.POMP = CN()
     cfg.TRAINER.POMP.N_CTX = 4  # number of context vectors
@@ -142,15 +131,7 @@ def main(args):
         dist.init_process_group(backend="nccl", world_size=args.world_size, rank=args.local_rank)
         torch.cuda.set_device(args.local_rank)
 
-    if dist.is_initialized():
-        if cfg.SEED >= 0:
-            print("Setting fixed seed: {}".format(cfg.SEED))
-            set_random_seed(cfg.SEED + dist.get_rank())
-        if dist.get_rank() == 0:
-            print_args(args, cfg)
-            print("Collecting env info ...")
-            print("** System info **\n{}\n".format(collect_env_info()))
-    else:
+    if is_main_process():
         if cfg.SEED >= 0:
             print("Setting fixed seed: {}".format(cfg.SEED))
             set_random_seed(cfg.SEED)
@@ -182,7 +163,9 @@ def main(args):
         best_checkpoint_file = "model.pth.tar-" + str(best_checkpoint_id)
         best_checkpoint_path = os.path.join(args.model_dir, learner, best_checkpoint_file)
         rename_path = os.path.join(args.model_dir, learner, 'model-best.pth.tar')
-        os.system(f"mv {best_checkpoint_path} {rename_path}")
+        if is_main_process():
+            os.system(f"mv {best_checkpoint_path} {rename_path}")
+        dist.barrier()
 
         trainer.load_model(args.model_dir, epoch=None)
         trainer.test(split='test')
@@ -191,7 +174,8 @@ def main(args):
             if epoch != best_checkpoint_id:
                 checkpoint_file = "model.pth.tar-" + str(epoch)
                 checkpoint_path = os.path.join(args.model_dir, learner, checkpoint_file)
-                os.system(f"rm -rf {checkpoint_path}")
+                if is_main_process():
+                    os.system(f"rm -rf {checkpoint_path}")
         return
     if not args.no_train:
         if args.model_dir != '':
