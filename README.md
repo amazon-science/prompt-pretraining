@@ -2,11 +2,11 @@
 
 
 
-> [**Prompt Pre-Training with Over Twenty-Thousand Classes for Open-Vocabulary Visual Recognition**]()<br>
+> [**Prompt Pre-Training with Over Twenty-Thousand Classes for Open-Vocabulary Visual Recognition**](https://arxiv.org/abs/2304.04704)<br>
 > [Shuhuai Ren](https://renshuhuai-andy.github.io/), [Aston Zhang](https://www.astonzhang.com/), [Yi Zhu](https://bryanyzhu.github.io/), [Shuai Zhang](https://shuaizhang.tech/), [Shuai Zheng](https://szhengac.github.io/), [Mu Li](http://www.cs.cmu.edu/~muli/), [Alex Smola](https://alex.smola.org/), [Xu Sun](https://xusun.org/index.htm)
 
 
-[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)]()
+[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2304.04704)
 
 
 # :rocket: News
