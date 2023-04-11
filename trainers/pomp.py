@@ -1,7 +1,6 @@
 '''
 Adapted from https://github.com/KaiyangZhou/CoOp
 '''
-import os.path
 import os.path as osp
 import random
 import time
@@ -23,6 +22,8 @@ from collections import OrderedDict, defaultdict
 import numpy as np
 from tqdm import tqdm
 from align_uniform import align_loss, uniform_loss
+from torch.utils.data.distributed import DistributedSampler
+from utils import is_main_process
 
 
 _tokenizer = _Tokenizer()
@@ -107,8 +108,9 @@ class PromptLearner(nn.Module):
             nn.init.normal_(ctx_vectors, std=0.02)
             prompt_prefix = " ".join(["X"] * n_ctx)
 
-        print(f'Initial context: "{prompt_prefix}"')
-        print(f"Number of context words (tokens): {n_ctx}")
+        if is_main_process():
+            print(f'Initial context: "{prompt_prefix}"')
+            print(f"Number of context words (tokens): {n_ctx}")
 
         self.ctx = nn.Parameter(ctx_vectors)  # to be optimized by gradient
 
@@ -268,12 +270,12 @@ class CustomCLIP(nn.Module):
 
                 if self.cfg.TRAINER.POMP.LOCAL_CORRECTION:
                     if self.cfg.TRAINER.POMP.NEG_SAMPLING_MODE == 'random':
-                        logits_neg += torch.log(torch.tensor(self.prompt_learner.train_n_cls - 1).to(logits_neg))
+                        logits_neg += torch.log10(torch.tensor(self.prompt_learner.train_n_cls - 1).to(logits_neg))
                         true_label_oob_num = torch.tensor([[num_oob]] * bsz).to(logits_neg) - \
                                              reject_labels.sum(-1, keepdims=True).to(logits_neg)
-                        logits_neg -= torch.log(true_label_oob_num)
+                        logits_neg -= torch.log10(true_label_oob_num)
                     else:
-                        logits_neg -= torch.log(prob).to(logits_neg)
+                        logits_neg -= torch.log10(prob).to(logits_neg)
 
                 logits = torch.cat([logits_pos, logits_neg], dim=1)
             else:
@@ -373,18 +375,10 @@ class POMP(TrainerX):
 
         self.scaler = GradScaler() if cfg.TRAINER.POMP.PREC == "amp" else None
 
-        if dist.is_initialized():
-            if dist.get_rank() == 0:
-                self.main_node = True
-            else:
-                self.main_node = False
-        else:
-            self.main_node = True
-
-        if self.main_node is True:
+        if is_main_process():
             wandb.init(project='POMP-%s' % cfg.DATASET.NAME, resume="allow", id=cfg.WANDB_ID,
                        name=(('-'.join(cfg.OUTPUT_DIR.split('/')[2:])).replace('GPT_', '')))
-            with open(os.path.join(cfg.OUTPUT_DIR, 'wandb_id.txt'), 'w') as f:
+            with open(osp.join(cfg.OUTPUT_DIR, 'wandb_id.txt'), 'w') as f:
                 f.write(wandb.run.id)
         # dist.barrier()
 
@@ -477,7 +471,7 @@ class POMP(TrainerX):
 
         results = self.evaluator.evaluate()
 
-        if self.main_node is True:
+        if is_main_process():
             for k, v in results.items():
                 tag = '{}/{}'.format(split, k)
                 self.write_scalar(tag, v, self.epoch)
@@ -540,7 +534,8 @@ class POMP(TrainerX):
             self._models[name].load_state_dict(state_dict, strict=False)
 
     def before_epoch(self):
-        self.train_loader_x.sampler.set_epoch(self.epoch)
+        if isinstance(self.train_loader_x.sampler, DistributedSampler):
+            self.train_loader_x.sampler.set_epoch(self.epoch)
 
     def run_epoch(self):
         self.set_model_mode('train')
@@ -563,28 +558,29 @@ class POMP(TrainerX):
                                    ) * self.num_batches
                 eta_seconds = batch_time.avg * (nb_this_epoch + nb_future_epochs)
                 eta = str(datetime.timedelta(seconds=int(eta_seconds)))
-                print(
-                    'epoch [{0}/{1}][{2}/{3}]\t'
-                    'time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
-                    'data {data_time.val:.3f} ({data_time.avg:.3f})\t'
-                    'eta {eta}\t'
-                    '{losses}\t'
-                    'lr {lr}'.format(
-                        self.epoch + 1,
-                        self.max_epoch,
-                        self.batch_idx + 1,
-                        self.num_batches,
-                        batch_time=batch_time,
-                        data_time=data_time,
-                        eta=eta,
-                        losses=losses,
-                        lr=self.get_current_lr()
+                if is_main_process():
+                    print(
+                        'epoch [{0}/{1}][{2}/{3}]\t'
+                        'time {batch_time.val:.3f} ({batch_time.avg:.3f})\t'
+                        'data {data_time.val:.3f} ({data_time.avg:.3f})\t'
+                        'eta {eta}\t'
+                        '{losses}\t'
+                        'lr {lr}'.format(
+                            self.epoch + 1,
+                            self.max_epoch,
+                            self.batch_idx + 1,
+                            self.num_batches,
+                            batch_time=batch_time,
+                            data_time=data_time,
+                            eta=eta,
+                            losses=losses,
+                            lr=self.get_current_lr()
+                        )
                     )
-                )
 
             n_iter = self.epoch * self.num_batches + self.batch_idx
 
-            if self.main_node is True:
+            if is_main_process():
                 for name, meter in losses.meters.items():
                     self.write_scalar('train/' + name, meter.avg, n_iter)
                     wandb.log({'train/' + name: meter.avg}, step=n_iter)
@@ -597,7 +593,7 @@ class POMP(TrainerX):
     def save_model(self, epoch, directory, is_best=False, val_result=None, model_name=''):
         names = self.get_model_names()
 
-        if self.main_node is True:
+        if is_main_process():
             for name in names:
                 model_dict = self._models[name].state_dict()
 
