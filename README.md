@@ -44,6 +44,16 @@ Please refer to the [RUN.md](docs/RUN.md) for detailed instructions on training,
 ## Contact
 If you have any questions, please feel free to create an issue on this repository.
 
+## Citation
+If you find this code useful for your research, please consider citing:
+```
+@article{ren2023pomp,
+  title={Prompt Pre-Training with Twenty-Thousand Classes for Open-Vocabulary Visual Recognition},
+  author={Ren, Shuhuai and Zhang, Aston and Zhu, Yi and Zhang, Shuai and Zheng, Shuai and Li, Mu and Smola, Alex and Sun, Xu},
+  journal={arXiv preprint arXiv:2304.04704},
+  year={2023}
+}
+```
 
 ## Acknowledgements
 
