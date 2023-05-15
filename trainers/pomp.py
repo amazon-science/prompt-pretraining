@@ -143,6 +143,7 @@ class PromptLearner(nn.Module):
         self.train_tokenized_prompts = train_tokenized_prompts  # torch.Tensor
         self.test_tokenized_prompts = test_tokenized_prompts  # torch.Tensor
         self.train_name_lens = train_name_lens
+        self.test_name_lens = test_name_lens
         self.class_token_position = cfg.TRAINER.POMP.CLASS_TOKEN_POSITION
 
     def forward(self, idx=None):
@@ -150,6 +151,8 @@ class PromptLearner(nn.Module):
         if self.training:
             prefix = self.train_token_prefix
             suffix = self.train_token_suffix
+            n_cls = self.train_n_cls
+            name_lens = self.train_name_lens
             if idx is not None:
                 prefix, suffix = prefix[idx], suffix[idx]
 
@@ -165,6 +168,8 @@ class PromptLearner(nn.Module):
         else:
             prefix = self.test_token_prefix
             suffix = self.test_token_suffix
+            n_cls = self.test_n_cls
+            name_lens = self.test_name_lens
             if ctx.dim() == 2:
                 ctx = ctx.unsqueeze(0).expand(self.test_n_cls, -1, -1)
 
@@ -180,8 +185,8 @@ class PromptLearner(nn.Module):
         elif self.class_token_position == "middle":
             half_n_ctx = self.n_ctx // 2
             prompts = []
-            for i in range(self.n_cls):
-                name_len = self.name_lens[i]
+            for i in range(n_cls):
+                name_len = name_lens[i]
                 prefix_i = prefix[i: i + 1, :, :]
                 class_i = suffix[i: i + 1, :name_len, :]
                 suffix_i = suffix[i: i + 1, name_len:, :]
@@ -201,8 +206,8 @@ class PromptLearner(nn.Module):
             prompts = torch.cat(prompts, dim=0)
         elif self.class_token_position == "front":
             prompts = []
-            for i in range(self.n_cls):
-                name_len = self.name_lens[i]
+            for i in range(n_cls):
+                name_len = name_lens[i]
                 prefix_i = prefix[i: i + 1, :, :]
                 class_i = suffix[i: i + 1, :name_len, :]
                 suffix_i = suffix[i: i + 1, name_len:, :]
@@ -377,7 +382,7 @@ class POMP(TrainerX):
 
         if is_main_process():
             wandb.init(project='POMP-%s' % cfg.DATASET.NAME, resume="allow", id=cfg.WANDB_ID,
-                       name=(('-'.join(cfg.OUTPUT_DIR.split('/')[2:])).replace('GPT_', '')))
+                       name=(('-'.join(cfg.OUTPUT_DIR.split('/')[2:])).replace('POMP_', '')))
             with open(osp.join(cfg.OUTPUT_DIR, 'wandb_id.txt'), 'w') as f:
                 f.write(wandb.run.id)
         # dist.barrier()
