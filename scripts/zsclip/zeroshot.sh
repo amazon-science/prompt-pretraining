@@ -3,9 +3,8 @@
 #cd ../..
 
 # custom config
-#DATA=~/efs/imagenet/
-DATA=~/efs/CoOp/data/
-TRAINER=ZeroshotCLIP2
+DATA=~/efs/data/
+TRAINER=ZeroshotCLIP
 DATASET=$1
 CFG=$2  # rn50, rn101, vit_b32 or vit_b16 vit_l14
 
