@@ -6,10 +6,20 @@
 > [Shuhuai Ren](https://renshuhuai-andy.github.io/), [Aston Zhang](https://www.astonzhang.com/), [Yi Zhu](https://bryanyzhu.github.io/), [Shuai Zhang](https://shuaizhang.tech/), [Shuai Zheng](https://szhengac.github.io/), [Mu Li](http://www.cs.cmu.edu/~muli/), [Alex Smola](https://alex.smola.org/), [Xu Sun](https://xusun.org/index.htm)
 
 
-[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2304.04704)
+[![paper](https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg)](https://arxiv.org/abs/2304.04704) 
+[![Colab](https://colab.research.google.com/assets/colab-badge.svg)](
+https://colab.research.google.com/drive/1OEFw1GfKXogx8mdFS2pClLjPK3aPEZyY?usp=sharing)
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/prompt-engineering-on-imagenet-21k)](https://paperswithcode.com/sota/prompt-engineering-on-imagenet-21k?p=prompt-pre-training-with-twenty-thousand) 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/prompt-engineering-on-imagenet-a)](https://paperswithcode.com/sota/prompt-engineering-on-imagenet-a?p=prompt-pre-training-with-twenty-thousand)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/prompt-engineering-on-imagenet-r)](https://paperswithcode.com/sota/prompt-engineering-on-imagenet-r?p=prompt-pre-training-with-twenty-thousand)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/prompt-engineering-on-imagenet-s)](https://paperswithcode.com/sota/prompt-engineering-on-imagenet-s?p=prompt-pre-training-with-twenty-thousand)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/open-vocabulary-semantic-segmentation-on-coco)](https://paperswithcode.com/sota/open-vocabulary-semantic-segmentation-on-coco?p=prompt-pre-training-with-twenty-thousand)
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/open-vocabulary-semantic-segmentation-on-5)](https://paperswithcode.com/sota/open-vocabulary-semantic-segmentation-on-5?p=prompt-pre-training-with-twenty-thousand) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/open-vocabulary-object-detection-on-lvis-v1-0)](https://paperswithcode.com/sota/open-vocabulary-object-detection-on-lvis-v1-0?p=prompt-pre-training-with-twenty-thousand) 
 
 # :rocket: News
+* **(May 31, 2023)** 
+  * Inference demo for image classification in Google Colab. 
 * **(Mar 22, 2023)** 
   * Codes for prompt pretraining (POMP) on ImageNet-21K, cross-dataset and cross-task evaluation.
   * Checkpoints of pre-trained POMP prompts, segmentation backbones, and detection backbones.
