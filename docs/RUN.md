@@ -9,6 +9,9 @@ We pre-train POMP on ImageNet-21K with a batch size of 32 using **8** NVIDIA V10
 Pre-training POMP on ImageNet-21K for 5 epochs takes ~1 hours.
 
 ## POMP for image classification
+Run our demo using Colab: [![Colab](https://colab.research.google.com/assets/colab-badge.svg)](
+https://colab.research.google.com/drive/1OEFw1GfKXogx8mdFS2pClLjPK3aPEZyY?usp=sharing)
+
 (1) Pre-training on ImageNet-21K
 ```bash
 # dataset=imagenet_21k, backbone=vit_b16_ep5_randaug2, class-token-position=end, prompt-length=4, #shot=16, class-specifc-prompt=False, K=1000
@@ -25,18 +28,20 @@ ls output/evaluation/POMP/vit_b16_ep5_randaug2_unc1000_16shots_nctx4_best_val_*/
 ```
 
 ## POMP for object detection (based on Detic)
+Run our demo using Jupyter (you need to [prepare Detic environment](../third_party/Detic/docs/INSTALL.md)): [demo.ipynb](../third_party/Detic/demo/demo.ipynb)
+
 Please first [prepare Detic environment](../third_party/Detic/docs/INSTALL.md), [prepare datasets](../third_party/Detic/datasets/README.md), [prepare ImageNet-21K pretrained backbone](https://github.com/facebookresearch/Detic/blob/main/docs/MODEL_ZOO.md#third-party-imagenet-21k-pretrained-models) and [prepare pre-trained POMP prompt](MODELS.md).
 
-Run the following commands from the directory `pomp/third_party/Detic`.
+Run the following commands from the directory `prompt-pretraining/third_party/Detic`.
 
 (1) Create class vectors based on pre-trained POMP prompt
 ```bash
 # for LVIS
-python tools/dump_clip_features.py --ann datasets/lvis/lvis_v1_val.json --prompt none --out_path datasets/metadata/lvis_v1_clip_pomp+cname.npy --model POMP --soft_prompt ~/pomp/pretrained/vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar
+python tools/dump_clip_features.py --ann datasets/lvis/lvis_v1_val.json --prompt none --out_path datasets/metadata/lvis_v1_clip_pomp+cname.npy --model POMP --soft_prompt ~/prompt-pretraining/pretrained/vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar
 # for COCO
-python tools/dump_clip_features.py --ann datasets/coco/zero-shot/instances_val2017_all_2_oriorder.json --prompt none --out_path datasets/metadata/coco_clip_pomp+cname.npy --model POMP --soft_prompt ~/pomp/pretrained/vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar
+python tools/dump_clip_features.py --ann datasets/coco/zero-shot/instances_val2017_all_2_oriorder.json --prompt none --out_path datasets/metadata/coco_clip_pomp+cname.npy --model POMP --soft_prompt ~/prompt-pretraining/pretrained/vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar
 # for Object365
-python tools/dump_clip_features.py --ann datasets/objects365/annotations/zhiyuan_objv2_val_fixname.json --prompt none --out_path datasets/metadata/o365_fixname_clip_pomp+cname.npy --model POMP --soft_prompt ~/pomp/pretrained/vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar
+python tools/dump_clip_features.py --ann datasets/objects365/annotations/zhiyuan_objv2_val_fixname.json --prompt none --out_path datasets/metadata/o365_fixname_clip_pomp+cname.npy --model POMP --soft_prompt ~/prompt-pretraining/pretrained/vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar
 ```
 
 (2) Open-vocabulary LVIS
@@ -62,7 +67,7 @@ python train_net.py --num-gpus 8 --config-file configs/Detic_LI_CLIP_R5021k_640b
 ## POMP for semantic segmentation (based on ZSSeg)
 Please first [prepare ZSSeg environment and datasets](../third_party/zsseg.baseline/README.md#Guideline), and [prepare pre-trained POMP prompt](MODELS.md).
 
-Run the following commands from the directory `pomp/third_party/zsseg.baseline`.
+Run the following commands from the directory `prompt-pretraining/third_party/zsseg.baseline`.
 
 (1) Open-vocabulary COCO Stuff
 ```bash

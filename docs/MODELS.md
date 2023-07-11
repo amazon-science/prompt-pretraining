@@ -4,9 +4,9 @@
 | [vit_b16_ep5_randaug2_unc1000_16shots_nctx4_cscFalse_ctpend_seed42.pth.tar](../configs/trainers/POMP/vit_b16_ep5_randaug2.yaml)    |                      [link](https://drive.google.com/file/d/1clOumlKZOCYwDGtY5WeCmIFFcy9YREJz/view?usp=share_link)                       |       24.9        |        66.7        |       60.4        |   5    |       4       | 
 | [vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar](../configs/trainers/POMP/vit_b16_ep20_randaug2.yaml) |                      [link](https://drive.google.com/file/d/1C8oU6cWkJdU3Q3IHaqTcbIToRLo9bMnu/view?usp=share_link)                       |       25.2        |        65.1        |       60.0        |   20   |      16       |
 
-make a `pretrained/` directory under the main directory `pomp/` and then download the above checkpoints to the `pretrained` directory. The directory structure should look like:
+make a `pretrained/` directory under the main directory `prompt-pretraining/` and then download the above checkpoints to the `pretrained` directory. The directory structure should look like:
 ```
-pomp/
+prompt-pretraining/
 |–– pretrained/
 |   |–– vit_b16_ep5_randaug2_unc1000_16shots_nctx4_cscFalse_ctpend_seed42.pth.tar
 |   |–– vit_b16_ep20_randaug2_unc1000_16shots_nctx16_cscFalse_ctpend_seed42.pth.tar
