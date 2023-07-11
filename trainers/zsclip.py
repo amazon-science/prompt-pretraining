@@ -46,6 +46,7 @@ class ZeroshotCLIP(TrainerX):
         clip_model.to(self.device)
 
         temp = CUSTOM_TEMPLATES[cfg.DATASET.NAME]
+        # temp = "a photo of a {}."
         prompts = [temp.format(c.replace("_", " ")) for c in classnames]
         print(f"Prompts: {prompts}")
         prompts = torch.cat([clip.tokenize(p) for p in prompts])

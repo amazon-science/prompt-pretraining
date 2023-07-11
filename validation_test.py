@@ -4,7 +4,7 @@ DATA = "~/efs/data/"
 TRAINER = "POMP"
 DATASET = "imagenet_21k"
 CFG = "vit_b16_ep5_randaug2"  # config file
-CTP = "end"  # class token position (end or middle)
+CTP = "end"  # class token position (end or middle or front)
 NCTX = 4  # number of context tokens
 SHOTS = 16  # number of shots (1, 2, 4, 8, 16)
 CSC = False  # class-specific context (False or True)
@@ -12,7 +12,7 @@ UNC = 1000  # number of update class
 SEED = 42
 # ID = 'nw8y9kjk'
 EPOCH = 5
-DIR = f'output/{DATASET}/{TRAINER}/{CFG}_unc{UNC}_{SHOTS}shots/nctx{NCTX}_cscFalse_ctpend/seed{SEED}'
+DIR = f'output/{DATASET}/{TRAINER}/{CFG}_unc{UNC}_{SHOTS}shots/nctx{NCTX}_csc{CSC}_ctp{CTP}/seed{SEED}'
 with open(os.path.join(DIR, 'wandb_id.txt'), 'r') as f:
     ID = f.readlines()[0].strip()
 
@@ -30,6 +30,8 @@ command = f"python -m torch.distributed.launch --nproc_per_node 8 --master_port 
       --validation-test \
       --wandb_id {ID} \
       DATASET.NUM_SHOTS 1 \
-      TRAINER.POMP.N_CTX {NCTX}"
+      TRAINER.POMP.N_CTX {NCTX} \
+      TRAINER.POMP.CSC {CSC} \
+      TRAINER.POMP.CLASS_TOKEN_POSITION {CTP}"
 os.system(command)
 

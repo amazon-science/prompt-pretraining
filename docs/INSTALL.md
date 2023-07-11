@@ -18,9 +18,9 @@ pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio==0.9.0 -f ht
 * Clone POMP code repository and install requirements
 ```bash
 # Clone clip-openness code base
-git clone https://github.com/amazon-science/pomp.git
+git clone https://github.com/amazon-science/prompt-pretraining.git
 
-cd pomp/
+cd prompt-pretraining/
 
 # Install requirements
 pip install -r requirements.txt
