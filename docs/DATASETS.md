@@ -58,7 +58,7 @@ imagenet21k_resized/
 |-- imagenet21k_small_classes/ # contains 8,718 folders like n01440764, n01443537, etc.
 |-- imagenet21k_miil_tree.pth
 ```
-Note that downloading ImageNet-21k requires huge disk space (around 180 GB).
+Note that downloading ImageNet-21k requires huge disk space (around 280 GB).
 
 ### Caltech101
 - Create a folder named `caltech-101/` under `$DATA`.
