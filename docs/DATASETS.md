@@ -50,7 +50,7 @@ imagenet/
 ### ImageNet-21K
 - Create a folder named `imagenet21k_resized/` under `$DATA`.
 - Download the `imagenet21k_miil_tree.pth` to `$DATA/imagenet21k_resized/` from this [link](https://miil-public-eu.oss-eu-central-1.aliyuncs.com/model-zoo/ImageNet_21K_P/resources/winter21/imagenet21k_miil_tree.pth). 
-- Download the dataset from the [official website](https://image-net.org/index.php) (official winter 2021 released version) and extract the training and validation sets to `$DATA/imagenet/images`. The directory structure should look like
+- Download the dataset from the [official website](https://image-net.org/index.php) (official winter 2021 released, Processed version of ImageNet21K) and extract the training and validation sets to `$DATA/imagenet21k_resized`. The directory structure should look like
 ```
 imagenet21k_resized/
 |–– imagenet21k_train/ # contains 10,451 folders like n01440764, n01443537, etc.
@@ -58,8 +58,7 @@ imagenet21k_resized/
 |-- imagenet21k_small_classes/ # contains 8,718 folders like n01440764, n01443537, etc.
 |-- imagenet21k_miil_tree.pth
 ```
-- If you had downloaded the ImageNet dataset before, you can create symbolic links to map the training and validation sets to `$DATA/imagenet/images`.
-- Download the `classnames.txt` to `$DATA/imagenet/` from this [link](https://drive.google.com/file/d/1-61f_ol79pViBFDG_IDlUQSwoLcn2XXF/view?usp=sharing). The class names are copied from [CLIP](https://github.com/openai/CLIP/blob/main/notebooks/Prompt_Engineering_for_ImageNet.ipynb).
+Note that downloading ImageNet-21k requires huge disk space (around 180 GB).
 
 ### Caltech101
 - Create a folder named `caltech-101/` under `$DATA`.
