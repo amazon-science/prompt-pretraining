@@ -18,10 +18,12 @@ https://colab.research.google.com/drive/1OEFw1GfKXogx8mdFS2pClLjPK3aPEZyY?usp=sh
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/open-vocabulary-semantic-segmentation-on-5)](https://paperswithcode.com/sota/open-vocabulary-semantic-segmentation-on-5?p=prompt-pre-training-with-twenty-thousand) [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/prompt-pre-training-with-twenty-thousand/open-vocabulary-object-detection-on-lvis-v1-0)](https://paperswithcode.com/sota/open-vocabulary-object-detection-on-lvis-v1-0?p=prompt-pre-training-with-twenty-thousand) 
 
 # :rocket: News
+* **(Sep 22, 2023)** 
+  * Our paper has been accepted by NeurIPS 2023. 
 * **(Jul 11, 2023)** 
-  * Inference demo for object detection in Jupyter. 
+  * Inference demo for object detection in [Jupyter](third_party/Detic/demo/demo.ipynb). 
 * **(May 31, 2023)** 
-  * Inference demo for image classification in Google Colab. 
+  * Inference demo for image classification in [Google Colab](https://colab.research.google.com/drive/1OEFw1GfKXogx8mdFS2pClLjPK3aPEZyY?usp=sharing). 
 * **(Mar 22, 2023)** 
   * Codes for prompt pretraining (POMP) on ImageNet-21K, cross-dataset and cross-task evaluation.
   * Checkpoints of pre-trained POMP prompts, segmentation backbones, and detection backbones.
