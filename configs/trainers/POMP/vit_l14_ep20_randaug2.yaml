@@ -33,4 +33,4 @@ TEST:
 
 MODEL:
   BACKBONE:
-    NAME: "ViT-B/32"
+    NAME: "ViT-L/14"
